@@ -94,7 +94,7 @@ class LocalDatabase extends ChangeNotifier{
 
       int total = Sqflite.firstIntValue(await db.rawQuery("SELECT COUNT(*) FROM checklist WHERE date LIKE '$index/$month' "));
       int done = Sqflite.firstIntValue(await db.rawQuery("SELECT SUM(status) FROM checklist WHERE date LIKE '$index/$month' "));
-      data.add(DayPerformance(day: '$index', total: total, done: done,));
+      data.add(DayPerformance(day: index , total: total, done: done,));
     }
     return data;
   }

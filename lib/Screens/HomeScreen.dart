@@ -3,9 +3,12 @@ import 'package:dailytodo/DataModel/TaskData.dart';
 import 'package:dailytodo/DesignElements/CustomChartCard.dart';
 import 'package:dailytodo/DesignElements/CustomCheckBox.dart';
 import 'package:dailytodo/LocalDatabase/LocalDatabase.dart';
+import 'package:day_night_switch/day_night_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:theme_provider/theme_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'EditingDialog.dart';
 
 
@@ -43,10 +46,59 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('DAILY TODO'),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(
+            Icons.info_outline,
+          ),
+          onPressed: (){
+            showAboutDialog(context: context,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text('App Icons by ', style: TextStyle(color: Colors.grey),),
+                    GestureDetector(
+                        onTap: () async{
+                          await launch('https://flaticon.com');
+                        },
+                        child: Text('Flaticon.com', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.blueGrey),)
+                    ),
+                  ],
+                )
+              ],
+              applicationName: 'Daily Todo',
+              applicationVersion: '1.0.1',
+              applicationIcon: Image(
+                image: AssetImage('Assets/calendar_1.png'),
+                height: 60.0,
+                width: 60.0,
+              ),
+            );
+          },
+        ),
+        actions: <Widget>[
+          Transform.scale(
+            scale: .5,
+            child: Container(
+            
+              child: Consumer<ValueNotifier<bool>>(
+                builder: (context, data, child){
+
+                  return DayNightSwitch(
+                    value: data.value,
+                    onChanged: (value){
+                      Provider.of<ValueNotifier<bool>>(context, listen: false).value = value;
+                      ThemeProvider.controllerOf(context).nextTheme();
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
       body: ListView(
         controller: _scrollController,
@@ -129,24 +181,27 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        height: 50.0,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              child:  RaisedButton(
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white,
-                child: Text('ADD NEW TASK', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),),
-                onPressed: (){
-                    showDialog(context: context, builder: (context){
-                      return EditingDialog();
-                    });
-                },
-              ),
-            )
-          ],
+      bottomNavigationBar: BottomAppBar(
+
+        child: Container(
+          height: 50.0,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                child:  RaisedButton(
+                  color: Theme.of(context).bottomAppBarColor,
+                  textColor: Colors.white,
+                  child: Text('ADD NEW TASK', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),),
+                  onPressed: (){
+                      showDialog(context: context, builder: (context){
+                        return EditingDialog();
+                      });
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       )
     );

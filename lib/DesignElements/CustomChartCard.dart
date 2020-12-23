@@ -65,7 +65,7 @@ class _CustomChartState extends State<CustomChart> {
                         Series(
                             id: 'Performance',
                             data: snapshot.data,
-                            domainFn: (DayPerformance dayPerformance, _) => dayPerformance.day,
+                            domainFn: (DayPerformance dayPerformance, _) => dayPerformance.day.toString(),
                             measureFn: (DayPerformance dayPerformance, _) => dayPerformance.getPercentage()
                         ),
                       ];

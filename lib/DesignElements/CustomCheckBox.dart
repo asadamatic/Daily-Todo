@@ -27,6 +27,8 @@ class _CustomCheckBoxState extends State<CustomCheckBox> with SingleTickerProvid
         elevation: 3.0,
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.5),
         child: CheckboxListTile(
+          checkColor: Colors.white,
+          activeColor: Colors.blue,
           value: widget.taskData.status,
           onChanged: (newValue) async{
             widget.taskData.status = newValue;

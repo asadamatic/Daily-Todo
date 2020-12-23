@@ -34,15 +34,22 @@ class _EditingDialogState extends State<EditingDialog> {
   Widget build(BuildContext context) {
     taskController.text = widget.taskData == null ? '' : widget.taskData.title;
     return AlertDialog(
-      title: Text(widget.taskData == null ? 'New Task' : 'Edit Task', style: TextStyle(color: Theme.of(context).primaryColor),),
+      title: Text(widget.taskData == null ? 'New Task' : 'Edit Task', style: TextStyle(color: Colors.blue[400]),),
       content: TextField(
         controller: taskController,
         autofocus: true,
-        cursorColor: Theme.of(context).primaryColor,
+        cursorColor: Colors.blue[400],
+        textCapitalization: TextCapitalization.words,
         decoration: InputDecoration(
           border: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Theme.of(context).primaryColor,
+              color: Colors.blue[400],
+            ),
+          ),
+          focusColor: Colors.blue[400],
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.blue[400],
             )
           ),
           hintText: 'Task Name',
@@ -56,7 +63,7 @@ class _EditingDialogState extends State<EditingDialog> {
           },
         ),
         FlatButton(
-          child: Text(widget.taskData == null ? 'Add' : 'Update', style: TextStyle(color: Theme.of(context).primaryColor),),
+          child: Text(widget.taskData == null ? 'Add' : 'Update', style: TextStyle(color: Colors.blue[400]),),
           onPressed: widget.taskData == null ? add : edit,
         )
       ],

@@ -1,6 +1,6 @@
 class DayPerformance{
 
-  String day;
+  int day;
   int total, done;
   double percentage;
 
