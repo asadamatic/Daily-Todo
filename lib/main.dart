@@ -1,14 +1,14 @@
-import 'package:dailytodo/LocalDatabase/LocalDatabase.dart';
+import 'package:dailytodo/LocalDatabase/task_list_notifier.dart';
 import 'package:dailytodo/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(DailyTodo());
 }
 
-class MyApp extends StatelessWidget {
+class DailyTodo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           ],
           onInitCallback: (controller, previouslySavedThemeFuture) async {
             // Do some other task here if you need to
-            String savedTheme = await previouslySavedThemeFuture;
+            String? savedTheme = await previouslySavedThemeFuture;
             if (savedTheme != null) {
               controller.setTheme(savedTheme);
               if (savedTheme == 'custom_dark_theme'){
@@ -66,8 +66,8 @@ class MyApp extends StatelessWidget {
           },
           child: MultiProvider(
             providers: [
-              ChangeNotifierProvider<LocalDatabase>(
-                create: (context)=> LocalDatabase(),
+              ChangeNotifierProvider<CheckListNotifier>(
+                create: (context)=> CheckListNotifier(),
               ),
               ChangeNotifierProvider<ValueNotifier<DateTime>>.value(
                 value: ValueNotifier<DateTime>(DateTime.now()),

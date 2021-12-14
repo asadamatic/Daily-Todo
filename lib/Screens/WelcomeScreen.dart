@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  final Function selectScreen;
-  WelcomeScreen({Key key, this.selectScreen}) : super(key: key);
+  final Function? selectScreen;
+  WelcomeScreen({Key? key, this.selectScreen}) : super(key: key);
 
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
@@ -15,7 +15,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     // TODO: implement initState
     super.initState();
     Future.delayed(Duration(seconds: 3)).then((value) {
-      widget.selectScreen();
+      widget.selectScreen!();
     });
   }
   @override
@@ -42,7 +42,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                     curve: Curves.bounceOut,
                     duration: Duration(milliseconds: 800),
-                    builder: (context, scale, child){
+                    builder: (context, dynamic scale, child){
                       return Transform.scale(
                           scale: scale,
                           child: child,

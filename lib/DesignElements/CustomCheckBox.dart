@@ -1,5 +1,5 @@
 import 'package:dailytodo/DataModel/TaskData.dart';
-import 'package:dailytodo/LocalDatabase/LocalDatabase.dart';
+import 'package:dailytodo/LocalDatabase/task_list_notifier.dart';
 import 'package:dailytodo/Screens/EditingDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 
 class CustomCheckBox extends StatefulWidget {
 
-  final TaskData taskData;
-  final Key key;
+  final TaskData? taskData;
+  final Key? key;
   CustomCheckBox({this.key, this.taskData,});
 
   @override
@@ -29,16 +29,16 @@ class _CustomCheckBoxState extends State<CustomCheckBox> with SingleTickerProvid
         child: CheckboxListTile(
           checkColor: Colors.white,
           activeColor: Colors.blue,
-          value: widget.taskData.status,
+          value: widget.taskData!.status,
           onChanged: (newValue) async{
-            widget.taskData.status = newValue;
-            await Provider.of<LocalDatabase>(context, listen: false).update(widget.taskData);
+            widget.taskData!.status = newValue;
+            await Provider.of<CheckListNotifier>(context, listen: false).update(widget.taskData!);
           },
           controlAffinity: ListTileControlAffinity.leading,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Expanded(child: Text('${widget.taskData.title}', style: TextStyle(decoration: widget.taskData.status ? TextDecoration.lineThrough :  TextDecoration.none),)),
+              Expanded(child: Text('${widget.taskData!.title}', style: TextStyle(decoration: widget.taskData!.status! ? TextDecoration.lineThrough :  TextDecoration.none),)),
               IconButton(
                 icon: Icon(
                   Icons.edit,
@@ -59,7 +59,7 @@ class _CustomCheckBoxState extends State<CustomCheckBox> with SingleTickerProvid
                   size: 21.0,
                 ),
                 onPressed: () async{
-                  await Provider.of<LocalDatabase>(context, listen: false).delete(widget.taskData);
+                  await Provider.of<CheckListNotifier>(context, listen: false).delete(widget.taskData!);
                 },
               )
             ],

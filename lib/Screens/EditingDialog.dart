@@ -1,12 +1,12 @@
 import 'package:dailytodo/DataModel/TaskData.dart';
-import 'package:dailytodo/LocalDatabase/LocalDatabase.dart';
+import 'package:dailytodo/LocalDatabase/task_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class EditingDialog extends StatefulWidget {
 
-  final TaskData taskData;
+  final TaskData? taskData;
   EditingDialog({this.taskData});
 
   @override
@@ -20,19 +20,19 @@ class _EditingDialogState extends State<EditingDialog> {
 
   void edit() async{
 
-    widget.taskData.title = taskController.text;
-    await Provider.of<LocalDatabase>(context, listen: false).update(widget.taskData);
+    widget.taskData!.title = taskController.text;
+    await Provider.of<CheckListNotifier>(context, listen: false).update(widget.taskData!);
     Navigator.of(context).pop();
   }
   void add() async{
 
     TaskData newTaskData = TaskData(title: taskController.text, date: DateFormat('d/M/y').format(Provider.of<ValueNotifier<DateTime>>(context, listen: false).value), status: false);
-    await Provider.of<LocalDatabase>(context, listen: false).insertData(newTaskData);
+    await Provider.of<CheckListNotifier>(context, listen: false).insertData(newTaskData);
     Navigator.of(context).pop();
   }
   @override
   Widget build(BuildContext context) {
-    taskController.text = widget.taskData == null ? '' : widget.taskData.title;
+    taskController.text = widget.taskData == null ? '' : widget.taskData!.title!;
     return AlertDialog(
       title: Text(widget.taskData == null ? 'New Task' : 'Edit Task', style: TextStyle(color: Colors.blue[400]),),
       content: TextField(
@@ -43,13 +43,13 @@ class _EditingDialogState extends State<EditingDialog> {
         decoration: InputDecoration(
           border: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.blue[400],
+              color: Colors.blue[400]!,
             ),
           ),
           focusColor: Colors.blue[400],
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.blue[400],
+              color: Colors.blue[400]!,
             )
           ),
           hintText: 'Task Name',
