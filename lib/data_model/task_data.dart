@@ -9,7 +9,6 @@ class TaskData{
   TaskData({this.id, this.title, this.status, this.date});
 
   int getStatus(){
-
     return status! ? 1 : 0;
   }
   Map<String, dynamic> toMap (){

@@ -1,93 +1,56 @@
-import 'package:dailytodo/LocalDatabase/task_list_notifier.dart';
+
 import 'package:dailytodo/wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:theme_provider/theme_provider.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(DailyTodo());
 }
 
 class DailyTodo extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ValueNotifier<bool>>.value(
-      value: ValueNotifier<bool>(false),
-      builder: (context, widget){
-
-        return ThemeProvider(
-          saveThemesOnChange: true,
-          themes: [
-            AppTheme(
-              description: 'Light theme for app',
-              id: 'custom_light_theme',
-              data: ThemeData(
-                  primaryColor: Colors.blue,
-                  accentColor: Colors.blue[400],
-                  textSelectionColor: Colors.blue[400],
-                  textSelectionHandleColor: Colors.blue[400],
-                  visualDensity: VisualDensity.adaptivePlatformDensity,
-                  brightness: Brightness.light,
-                  appBarTheme: AppBarTheme(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  bottomAppBarColor: Theme.of(context).primaryColor,
-              ),
-            ),AppTheme(
-              description: 'Dark theme for app',
-              id: 'custom_dark_theme',
-              data: ThemeData(
-                  primaryColor: Colors.blue,
-                  accentColor: Colors.blue[400],
-                  textSelectionColor: Colors.blue[400],
-                  textSelectionHandleColor: Colors.blue[400],
-                  visualDensity: VisualDensity.adaptivePlatformDensity,
-                  brightness: Brightness.dark,
-                  appBarTheme: AppBarTheme(
-                    color: Colors.grey[800],
-                  ),
-                  bottomAppBarTheme: BottomAppBarTheme(
-                    color: Colors.grey[800],
-                  ),
-                  bottomAppBarColor: Colors.grey[800],
-              ),
-            ),
-          ],
-          onInitCallback: (controller, previouslySavedThemeFuture) async {
-            // Do some other task here if you need to
-            String? savedTheme = await previouslySavedThemeFuture;
-            if (savedTheme != null) {
-              controller.setTheme(savedTheme);
-              if (savedTheme == 'custom_dark_theme'){
-                  Provider.of<ValueNotifier<bool>>(context, listen: false).value = true;
-              }
-            }
-          },
-          child: MultiProvider(
-            providers: [
-              ChangeNotifierProvider<CheckListNotifier>(
-                create: (context)=> CheckListNotifier(),
-              ),
-              ChangeNotifierProvider<ValueNotifier<DateTime>>.value(
-                value: ValueNotifier<DateTime>(DateTime.now()),
-              ),
-
-            ],
-            child: ThemeConsumer(
-              child: Builder(
-                builder: (themeContext) => MaterialApp(
-                  title: 'Daily Todo',
-                  debugShowCheckedModeBanner: false,
-                  color: Colors.white,
-                  theme: ThemeProvider.themeOf(themeContext).data,
-                  home: Wrapper(),
-                ),
-              ),
-            ),
+    return GetMaterialApp(
+      title: 'Daily Todo',
+      debugShowCheckedModeBanner: false,
+      color: Colors.white,
+      themeMode: ThemeMode.system,
+      theme: ThemeData(
+        primaryColor: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        brightness: Brightness.light,
+        appBarTheme: AppBarTheme(
+          color: Theme.of(context).primaryColor,
+        ),
+        bottomAppBarColor: Theme.of(context).primaryColor,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+            secondary: Colors.blue[400], brightness: Brightness.light),
+        textSelectionTheme: TextSelectionThemeData(
+          selectionColor: Colors.blue[400],
+          selectionHandleColor: Colors.blue[400],
+        ),
+      ),
+      darkTheme: ThemeData(
+          primaryColor: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          brightness: Brightness.dark,
+          appBarTheme: AppBarTheme(
+            color: Colors.grey[800],
+            foregroundColor: Colors.white,
           ),
-        );
-      },
+          bottomAppBarTheme: BottomAppBarTheme(
+            color: Colors.grey[800],
+          ),
+          bottomAppBarColor: Colors.grey[800],
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+              secondary: Colors.blue[400], brightness: Brightness.dark),
+          textSelectionTheme: TextSelectionThemeData(
+            selectionColor: Colors.blue[400],
+            selectionHandleColor: Colors.blue[400],
+          ),
+          floatingActionButtonTheme:
+              FloatingActionButtonThemeData(backgroundColor: Colors.black)),
+      home: Wrapper(),
     );
   }
 }

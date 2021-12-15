@@ -1,5 +1,5 @@
-import 'package:dailytodo/Screens/HomeScreen.dart';
-import 'package:dailytodo/Screens/WelcomeScreen.dart';
+import 'package:dailytodo/Screens/home_screen.dart';
+import 'package:dailytodo/Screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
