@@ -46,9 +46,9 @@ class LocalDatabase {
     return list.map(returnTaskData).toList();
   }
 
-  Future<void> insertData(TaskData taskData) async {
+  Future<int> insertData(TaskData taskData) async {
     final Database? db = await database;
-    db!.insert('checklist', taskData.toMap());
+    return await db!.insert('checklist', taskData.toMap());
   }
 
   Future<void> update(TaskData taskData) async {
@@ -60,12 +60,6 @@ class LocalDatabase {
   Future<void> delete(TaskData taskData) async {
     final Database? db = await database;
     await db!.delete('checklist', where: 'id = ?', whereArgs: [taskData.id]);
-  }
-
-  Future<int?> listCount(DateTime pickedDate) async {
-    final Database? db = await database;
-    return Sqflite.firstIntValue(await db!.rawQuery(
-        'SELECT COUNT(*) FROM checklist where date = ${DateFormat('d/M/y').format(pickedDate)}'));
   }
 
   List _daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];

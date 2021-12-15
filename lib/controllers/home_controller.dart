@@ -12,10 +12,9 @@ class HomeController extends GetxController {
   Brightness brightness = SchedulerBinding.instance!.window.platformBrightness;
   ThemeMode themeMode = ThemeMode.system;
   LocalDatabase _localDatabase = LocalDatabase();
-  RxList<DayPerformance> dayPerformance = <DayPerformance>[].obs;
+  List<DayPerformance> dayPerformance = <DayPerformance>[];
   @override
   void onInit() async {
-    print("Initializing");
     tasks = await _localDatabase.returnTasks(pickedDate);
     await updateDataForGraph();
     themeMode =
@@ -47,15 +46,14 @@ class HomeController extends GetxController {
   }
 
   addTask(TaskData taskData) async {
-    print("Add");
-    await _localDatabase.insertData(taskData);
+    final id = await _localDatabase.insertData(taskData);
+    taskData.id = id;
     tasks.add(taskData);
     await updateDataForGraph();
     update();
   }
 
   editTask(TaskData taskData) async {
-    print("Edit");
     await _localDatabase.update(taskData);
     tasks[tasks.indexWhere((item) => item.id == taskData.id)] = taskData;
     await updateDataForGraph();
@@ -71,6 +69,6 @@ class HomeController extends GetxController {
   }
 
   updateDataForGraph() async {
-    dayPerformance.value = await _localDatabase.getDataForGraph(pickedDate);
+    dayPerformance = await _localDatabase.getDataForGraph(pickedDate);
   }
 }
