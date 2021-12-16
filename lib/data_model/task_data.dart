@@ -1,6 +1,4 @@
-
-class TaskData{
-
+class TaskData {
   int? id;
   String? title;
   bool? status;
@@ -8,11 +6,11 @@ class TaskData{
 
   TaskData({this.id, this.title, this.status, this.date});
 
-  int getStatus(){
+  int getStatus() {
     return status! ? 1 : 0;
   }
-  Map<String, dynamic> toMap (){
 
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
       'title': title,

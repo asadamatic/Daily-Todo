@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 
-class HomeController extends GetxController {
+class TodoHomeController extends GetxController {
   DateTime pickedDate = DateTime.now();
   ScrollController scrollController = ScrollController();
   List<TaskData> tasks = [];
@@ -32,7 +32,7 @@ class HomeController extends GetxController {
         pickedDate;
     tasks = await _localDatabase.returnTasks(pickedDate);
     await updateDataForGraph();
-    update();
+    update(['tasksUpdate', 'chartUpdate']);
   }
 
   toggleTheme(bool value) {
@@ -43,7 +43,7 @@ class HomeController extends GetxController {
       themeMode = ThemeMode.light;
       Get.changeThemeMode(ThemeMode.light);
     }
-    update();
+    update(['themeUpdate']);
   }
 
   addTask(TaskData taskData) async {
@@ -51,14 +51,14 @@ class HomeController extends GetxController {
     taskData.id = id;
     tasks.add(taskData);
     await updateDataForGraph();
-    update();
+    update(['tasksUpdate', 'chartUpdate']);
   }
 
   editTask(TaskData taskData) async {
     await _localDatabase.update(taskData);
     tasks[tasks.indexWhere((item) => item.id == taskData.id)] = taskData;
     await updateDataForGraph();
-    update();
+    update(['tasksUpdate', 'chartUpdate']);
   }
 
   deleteTask(TaskData taskData) async {
@@ -66,7 +66,7 @@ class HomeController extends GetxController {
     await _localDatabase.delete(taskData);
     tasks.remove(taskData);
     await updateDataForGraph();
-    update();
+    update(['tasksUpdate', 'chartUpdate']);
   }
 
   updateDataForGraph() async {

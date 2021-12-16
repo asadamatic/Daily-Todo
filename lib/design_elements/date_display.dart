@@ -6,10 +6,11 @@ import 'package:intl/intl.dart';
 class DateDisplay extends StatelessWidget {
   const DateDisplay({
     Key? key,
-    required HomeController homeController,
-  }) : _homeController = homeController, super(key: key);
+    required TodoHomeController homeController,
+  })  : _homeController = homeController,
+        super(key: key);
 
-  final HomeController _homeController;
+  final TodoHomeController _homeController;
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +21,11 @@ class DateDisplay extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
         child: Container(
           padding:
-          EdgeInsets.only(right: 12.0, left: 16.0, top: 12.0, bottom: 12.0),
+              EdgeInsets.only(right: 12.0, left: 16.0, top: 12.0, bottom: 12.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              GetBuilder<HomeController>(
+              GetBuilder<TodoHomeController>(
                 builder: (_homeController) {
                   return Text(
                     '${DateFormat.yMMMMd().format(_homeController.pickedDate)}',

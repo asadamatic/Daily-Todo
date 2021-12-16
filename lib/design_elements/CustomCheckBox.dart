@@ -18,7 +18,7 @@ class CustomCheckBox extends StatefulWidget {
 
 class _CustomCheckBoxState extends State<CustomCheckBox>
     with SingleTickerProviderStateMixin {
-  final HomeController _homeController = Get.find();
+  final TodoHomeController _homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -33,10 +33,8 @@ class _CustomCheckBoxState extends State<CustomCheckBox>
           onChanged: (newValue) async {
             setState(() {
               widget.taskData!.status = newValue;
-
             });
             await _homeController.editTask(widget.taskData!);
-
           },
           controlAffinity: ListTileControlAffinity.leading,
           title: Row(

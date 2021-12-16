@@ -1,19 +1,20 @@
 import 'package:dailytodo/controllers/home_controller.dart';
 import 'package:dailytodo/data_model/task_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class EditingDialog extends StatefulWidget {
   final TaskData? taskData;
-  const EditingDialog({this.taskData});
+  EditingDialog({this.taskData});
 
   @override
   _EditingDialogState createState() => _EditingDialogState();
 }
 
 class _EditingDialogState extends State<EditingDialog> {
-  final HomeController _homeController = Get.find();
+  final TodoHomeController _homeController = Get.find();
   //Task editing controller
   final taskController = TextEditingController();
 
@@ -95,10 +96,9 @@ class _EditingDialogState extends State<EditingDialog> {
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.transparent),
-                      foregroundColor: Theme.of(context)
-                          .textButtonTheme
-                          .style!
-                          .backgroundColor,
+                      foregroundColor:
+                          _homeController.themeMode == ThemeMode.light ? MaterialStateProperty.all(Colors.blue)
+                              :  MaterialStateProperty.all(Colors.white),
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();

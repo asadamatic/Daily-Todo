@@ -1,5 +1,4 @@
-class DayPerformance{
-
+class DayPerformance {
   int? day;
   int? total, done;
   double? percentage;
@@ -7,11 +6,9 @@ class DayPerformance{
   DayPerformance({this.day, this.total, this.done});
 
   double getPercentage() {
-
-    if (done == 0 || done == null || total == null){
-
+    if (done == 0 || done == null || total == null) {
       return 0.0;
     }
-    return done!/total!;
+    return done! / total!;
   }
 }

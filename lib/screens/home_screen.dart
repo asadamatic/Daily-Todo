@@ -8,7 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'editing_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
-  final _homeController = Get.put(HomeController());
+  final _homeController = Get.put(TodoHomeController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,8 +55,11 @@ class HomeScreen extends StatelessWidget {
           ),
           actions: <Widget>[
             Container(
-              child: GetBuilder<HomeController>(
+              child: GetBuilder<TodoHomeController>(
+                id: 'themeUpdate',
+                assignId: true,
                 builder: (_homeController) {
+                  print('Theme switch rebuilt');
                   return Switch(
                       value: _homeController.themeMode == ThemeMode.dark,
                       onChanged: _homeController.toggleTheme);
@@ -68,37 +71,39 @@ class HomeScreen extends StatelessWidget {
         body: ListView(
           controller: _homeController.scrollController,
           children: <Widget>[
-            const CustomChartCard(),
+            CustomChartCard(),
             DateDisplay(homeController: _homeController),
-            GetBuilder<HomeController>(
-              builder: (_homeController) {
-                return Column(
-                  children: <Widget>[
-                    Column(
-                      children: _homeController.tasks
-                          .map<Widget>((taskData) => CustomCheckBox(
-                              key: UniqueKey(), taskData: taskData))
-                          .toList(),
+            Column(
+              children: <Widget>[
+                GetBuilder<TodoHomeController>(
+                    id: 'tasksUpdate',
+                    assignId: true,
+                    builder: (_homeController) {
+                      print('Tasks list rebuilt');
+                      return Column(
+                        children: _homeController.tasks
+                            .map<Widget>((taskData) => CustomCheckBox(
+                                key: UniqueKey(), taskData: taskData))
+                            .toList(),
+                      );
+                    }),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FloatingActionButton(
+                    child: Icon(
+                      Icons.keyboard_arrow_up,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FloatingActionButton(
-                        child: Icon(
-                          Icons.keyboard_arrow_up,
-                        ),
-                        onPressed: () async {
-                          _homeController.scrollController.animateTo(
-                            0.0,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeOut,
-                          );
-                        },
-                      ),
-                    )
-                  ],
-                );
-              },
-            ),
+                    onPressed: () async {
+                      _homeController.scrollController.animateTo(
+                        0.0,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      );
+                    },
+                  ),
+                )
+              ],
+            )
           ],
         ),
         bottomNavigationBar: BottomAppBar(
@@ -123,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (context) {
-                            return const EditingDialog();
+                            return EditingDialog();
                           });
                     },
                   ),

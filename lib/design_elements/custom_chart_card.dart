@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
 class CustomChartCard extends StatelessWidget {
-  const CustomChartCard();
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -22,7 +21,7 @@ class CustomChartCard extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.all(10.0),
-            child: GetBuilder<HomeController>(
+            child: GetBuilder<TodoHomeController>(
               builder: (_homeController) {
                 return Text(
                     '${DateFormat('MMMM y').format(_homeController.pickedDate)}');
@@ -43,31 +42,34 @@ class CustomChart extends StatefulWidget {
 class _CustomChartState extends State<CustomChart> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(builder: (_homeController) {
-      List<Series<DayPerformance, String>> series = [
-        Series(
-            id: 'Performance',
-            data: _homeController.dayPerformance,
-            domainFn: (DayPerformance dayPerformance, _) =>
-                dayPerformance.day.toString(),
-            measureFn: (DayPerformance dayPerformance, _) =>
-                dayPerformance.getPercentage()),
-      ];
-      return BarChart(
-        series,
-        animate: true,
-        primaryMeasureAxis: NumericAxisSpec(
-          renderSpec: NoneRenderSpec(),
-        ),
-        domainAxis: OrdinalAxisSpec(
-          renderSpec: NoneRenderSpec(),
-          showAxisLine: true,
-          viewport: OrdinalViewport('AePS', 31),
-        ),
-        behaviors: [
-          SeriesLegend(),
-        ],
-      );
-    });
+    return GetBuilder<TodoHomeController>(
+        id: 'chartUpdate',
+        assignId: true,
+        builder: (_homeController) {
+          List<Series<DayPerformance, String>> series = [
+            Series(
+                id: 'Performance',
+                data: _homeController.dayPerformance,
+                domainFn: (DayPerformance dayPerformance, _) =>
+                    dayPerformance.day.toString(),
+                measureFn: (DayPerformance dayPerformance, _) =>
+                    dayPerformance.getPercentage()),
+          ];
+          return BarChart(
+            series,
+            animate: true,
+            primaryMeasureAxis: NumericAxisSpec(
+              renderSpec: NoneRenderSpec(),
+            ),
+            domainAxis: OrdinalAxisSpec(
+              renderSpec: NoneRenderSpec(),
+              showAxisLine: true,
+              viewport: OrdinalViewport('AePS', 31),
+            ),
+            behaviors: [
+              SeriesLegend(),
+            ],
+          );
+        });
   }
 }

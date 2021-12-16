@@ -1,4 +1,3 @@
-
 import 'package:dailytodo/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,13 +23,13 @@ class DailyTodo extends StatelessWidget {
         ),
         bottomAppBarColor: Theme.of(context).primaryColor,
         textButtonTheme: TextButtonThemeData(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
-              shape:  MaterialStateProperty.all(RoundedRectangleBorder(
-                  side: BorderSide(
-                      color: Theme.of(context).primaryColor),
-                  borderRadius: BorderRadius.circular(8.0)))
-            ),
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all(Colors.blue),
+              foregroundColor: MaterialStateProperty.all(Colors.white),
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.blue),
+                  borderRadius: BorderRadius.circular(8.0)))),
         ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
             secondary: Colors.blue[400], brightness: Brightness.light),
@@ -48,14 +47,12 @@ class DailyTodo extends StatelessWidget {
             foregroundColor: Colors.white,
           ),
           textButtonTheme: TextButtonThemeData(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.black),
-                shape:  MaterialStateProperty.all(RoundedRectangleBorder(
-                    side: BorderSide(
-                        color: Colors.black),
-                    borderRadius: BorderRadius.circular(8.0)))
-            )
-          ),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(8.0))))),
           bottomAppBarTheme: BottomAppBarTheme(
             color: Colors.grey[800],
           ),
@@ -68,7 +65,7 @@ class DailyTodo extends StatelessWidget {
           ),
           floatingActionButtonTheme:
               FloatingActionButtonThemeData(backgroundColor: Colors.black)),
-      home: const Wrapper(),
+      home: Wrapper(),
     );
   }
 }
