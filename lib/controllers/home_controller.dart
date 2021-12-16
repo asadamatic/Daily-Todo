@@ -31,6 +31,7 @@ class HomeController extends GetxController {
             initialDate: pickedDate)) ??
         pickedDate;
     tasks = await _localDatabase.returnTasks(pickedDate);
+    await updateDataForGraph();
     update();
   }
 

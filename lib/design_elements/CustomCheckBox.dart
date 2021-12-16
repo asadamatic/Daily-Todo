@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 class CustomCheckBox extends StatefulWidget {
   final TaskData? taskData;
   final Key? key;
-  CustomCheckBox({
+  const CustomCheckBox({
     this.key,
     this.taskData,
   });
@@ -23,7 +23,7 @@ class _CustomCheckBoxState extends State<CustomCheckBox>
   Widget build(BuildContext context) {
     return Card(
         shape: ContinuousRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0)),
+            borderRadius: BorderRadius.circular(15.0)),
         elevation: 3.0,
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.5),
         child: CheckboxListTile(

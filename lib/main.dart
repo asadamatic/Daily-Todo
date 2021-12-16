@@ -23,6 +23,15 @@ class DailyTodo extends StatelessWidget {
           color: Theme.of(context).primaryColor,
         ),
         bottomAppBarColor: Theme.of(context).primaryColor,
+        textButtonTheme: TextButtonThemeData(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
+              shape:  MaterialStateProperty.all(RoundedRectangleBorder(
+                  side: BorderSide(
+                      color: Theme.of(context).primaryColor),
+                  borderRadius: BorderRadius.circular(8.0)))
+            ),
+        ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
             secondary: Colors.blue[400], brightness: Brightness.light),
         textSelectionTheme: TextSelectionThemeData(
@@ -38,6 +47,15 @@ class DailyTodo extends StatelessWidget {
             color: Colors.grey[800],
             foregroundColor: Colors.white,
           ),
+          textButtonTheme: TextButtonThemeData(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.black),
+                shape:  MaterialStateProperty.all(RoundedRectangleBorder(
+                    side: BorderSide(
+                        color: Colors.black),
+                    borderRadius: BorderRadius.circular(8.0)))
+            )
+          ),
           bottomAppBarTheme: BottomAppBarTheme(
             color: Colors.grey[800],
           ),
@@ -50,7 +68,7 @@ class DailyTodo extends StatelessWidget {
           ),
           floatingActionButtonTheme:
               FloatingActionButtonThemeData(backgroundColor: Colors.black)),
-      home: Wrapper(),
+      home: const Wrapper(),
     );
   }
 }

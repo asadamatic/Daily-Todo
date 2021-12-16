@@ -91,8 +91,6 @@ class LocalDatabase {
         total: total,
         done: done,
       ));
-      print(total);
-      print(done);
     }
 
     return data;

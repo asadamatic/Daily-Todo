@@ -1,15 +1,14 @@
-
 import 'package:dailytodo/controllers/home_controller.dart';
 import 'package:dailytodo/design_elements/custom_chart_card.dart';
 import 'package:dailytodo/design_elements/CustomCheckBox.dart';
+import 'package:dailytodo/design_elements/date_display.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'editing_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
-  final HomeController _homeController = Get.put(HomeController());
+  final _homeController = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +68,7 @@ class HomeScreen extends StatelessWidget {
         body: ListView(
           controller: _homeController.scrollController,
           children: <Widget>[
-            CustomChartCard(),
+            const CustomChartCard(),
             DateDisplay(homeController: _homeController),
             GetBuilder<HomeController>(
               builder: (_homeController) {
@@ -82,20 +81,20 @@ class HomeScreen extends StatelessWidget {
                           .toList(),
                     ),
                     Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: FloatingActionButton(
-                              child: Icon(
-                                Icons.keyboard_arrow_up,
-                              ),
-                              onPressed: () async {
-                                _homeController.scrollController.animateTo(
-                                  0.0,
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeOut,
-                                );
-                              },
-                            ),
-                          )
+                      padding: const EdgeInsets.all(8.0),
+                      child: FloatingActionButton(
+                        child: Icon(
+                          Icons.keyboard_arrow_up,
+                        ),
+                        onPressed: () async {
+                          _homeController.scrollController.animateTo(
+                            0.0,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOut,
+                          );
+                        },
+                      ),
+                    )
                   ],
                 );
               },
@@ -124,57 +123,13 @@ class HomeScreen extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (context) {
-                            return EditingDialog();
+                            return const EditingDialog();
                           });
                     },
                   ),
                 )
               ],
             ),
-          ),
-        ));
-  }
-}
-
-class DateDisplay extends StatelessWidget {
-  const DateDisplay({
-    Key? key,
-    required HomeController homeController,
-  }) : _homeController = homeController, super(key: key);
-
-  final HomeController _homeController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        elevation: 5.0,
-        shape: ContinuousRectangleBorder(
-            borderRadius: BorderRadius.circular(35.0)),
-        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-        child: Container(
-          padding:
-              EdgeInsets.only(right: 12.0, left: 16.0, top: 12.0, bottom: 12.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              GetBuilder<HomeController>(
-                builder: (_homeController) {
-                  return Text(
-                    '${DateFormat.yMMMMd().format(_homeController.pickedDate)}',
-                    style: TextStyle(
-                      fontSize: 24.0,
-                    ),
-                  );
-                },
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.calendar_today,
-                  color: Colors.blue,
-                ),
-                onPressed: () => _homeController.selectDate(),
-              )
-            ],
           ),
         ));
   }

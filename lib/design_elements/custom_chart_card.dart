@@ -5,18 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
-class CustomChartCard extends StatefulWidget {
-  @override
-  _CustomChartCardState createState() => _CustomChartCardState();
-}
-
-class _CustomChartCardState extends State<CustomChartCard> {
+class CustomChartCard extends StatelessWidget {
+  const CustomChartCard();
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 5.0,
       shape:
-          ContinuousRectangleBorder(borderRadius: BorderRadius.circular(35.0)),
+          ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       child: Column(
         children: <Widget>[

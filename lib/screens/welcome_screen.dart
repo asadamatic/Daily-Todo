@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
   final Function? selectScreen;
-  WelcomeScreen({Key? key, this.selectScreen}) : super(key: key);
+  const WelcomeScreen({Key? key, this.selectScreen}) : super(key: key);
 
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
